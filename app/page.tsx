@@ -1,4 +1,50 @@
+'use client';
+
+import SecretModal from '@/components/secretModal';
+import { useEffect, useState } from 'react';
+
 export default function Page() {
+  const [authenticating, setAuthenticating] = useState(false);
+
+  useEffect(() => {
+    function authenticate(event: KeyboardEvent) {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        setAuthenticating(true);
+      }
+    }
+    window.addEventListener('keydown', authenticate);
+    return () => {
+      window.removeEventListener('keydown', authenticate);
+    };
+  }, []);
+
+  const onSubmitValidCheck = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const { value } = event.currentTarget[0] as HTMLInputElement;
+
+    try {
+      const response = await fetch('/api/secret', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: value }),
+      });
+
+      if (response.status === 401) {
+        alert('Invalid Password');
+        return;
+      }
+
+      setAuthenticating(false);
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   return (
     <div className='flex-1 flex flex-col justify-center items-center gap-y-2'>
       <h1 className='text-2xl font-bold md:text-4xl'>
@@ -7,12 +53,19 @@ export default function Page() {
       <p className='text-xs md:text-2xl'>
         I will introduce my daily life and thoughts on my blog.
       </p>
-      <p className='text-xs md:text-2xl text-gray-600 dark:text-gray-400'>
+      <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
         If you want to contact me, please reach out to my email
       </p>
-      <p className='text-xs md:text-2xl text-gray-600 dark:text-gray-400'>
+      <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
         nsrbsg@gmail.com
       </p>
+      {authenticating && (
+        <SecretModal
+          open={authenticating}
+          setOpen={setAuthenticating}
+          onConfirm={onSubmitValidCheck}
+        />
+      )}
     </div>
   );
 }
