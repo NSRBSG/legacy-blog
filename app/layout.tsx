@@ -23,6 +23,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `(
               function() {
+                window.addEventListener('storage', (e) => {
+                  if(e.key === 'theme') {
+                    localStorage.setItem(e.key, e.newValue);
+                    document.documentElement.classList.remove('dark', 'light');
+                    document.documentElement.classList.add(e.newValue);
+                  }
+                })
+
                 let theme = localStorage.getItem('theme');
                 
                 if(!theme) {
@@ -36,14 +44,6 @@ export default function RootLayout({
                 }
 
                 document.documentElement.classList.add(theme);
-
-                window.addEventListener('storage', (e) => {
-                  if(e.key === 'theme') {
-                    localStorage.setItem(e.key, e.newValue);
-                    document.documentElement.classList.remove('dark', 'light');
-                    document.documentElement.classList.add(e.newValue);
-                  }
-                })
               }()
             )`,
           }}
