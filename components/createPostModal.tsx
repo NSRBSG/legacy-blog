@@ -101,7 +101,7 @@ export default function CreatePostModal({
       <div className='flex flex-col flex-1 bg-white break-all overflow-auto'>
         <div className='p-4 md:p-8 xl:p-16 w-full flex flex-1'>
           <div
-            className='prose prose-neutral w-[1000px] flex flex-col flex-1'
+            className='prose prose-neutral flex flex-col flex-1'
             dangerouslySetInnerHTML={{ __html: remark }}
           />
         </div>

@@ -1,0 +1,66 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import rehypeSanitize from 'rehype-sanitize';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+
+interface Post {
+  id: string;
+  thumbnail?: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
+export default function Page({ params: { id } }: { params: { id: number } }) {
+  const [post, setPost] = useState<Post | null>(null);
+  const [remark, setRemark] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(`/api/post/${id}`);
+        const { result } = await response.json();
+        const { rows } = result;
+        const [row] = rows;
+
+        const file = await unified()
+          .use(remarkParse)
+          .use(remarkRehype)
+          .use(rehypeSanitize)
+          .use(rehypeStringify)
+          .process(row.content);
+
+        setRemark(String(file));
+        setPost(row);
+      } catch (error: any) {
+        alert(error.message);
+      }
+    })();
+  }, [id]);
+
+  const getLocalDate = (date: string) => {
+    const localDate = new Date(date);
+    return `${localDate.getFullYear()}-${
+      localDate.getMonth() + 1
+    }-${localDate.getDate()}`;
+  };
+
+  return (
+    <div className='w-full flex flex-col flex-1 items-center '>
+      <div className='md:w-[768px]'>
+        <h1 className='text-4xl font-bold mt-16 mb-8'>{post?.title}</h1>
+        <h4 className='text-neutral-500 font-semibold mb-8 '>
+          {post?.date && getLocalDate(post.date)}
+        </h4>
+        <div
+          className='prose-lg dark:prose-invert prose-neutral flex flex-col flex-1'
+          dangerouslySetInnerHTML={{ __html: remark }}
+        />
+      </div>
+    </div>
+  );
+}
