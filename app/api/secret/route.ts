@@ -4,7 +4,6 @@ export async function POST(request: Request) {
   try {
     const { password } = await request.json();
 
-    console.log(password, process.env.CLIENT_KEY);
     if (password === process.env.CLIENT_KEY) {
       return NextResponse.json({ message: 'Success' }, { status: 200 });
     }
