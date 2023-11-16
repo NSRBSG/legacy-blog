@@ -1,10 +1,12 @@
 'use client';
 
+import CreatePostModal from '@/components/createPostModal';
 import SecretModal from '@/components/secretModal';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
   const [authenticating, setAuthenticating] = useState(false);
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     function authenticate(event: KeyboardEvent) {
@@ -38,11 +40,12 @@ export default function Page() {
         alert('Invalid Password');
         return;
       }
-
-      setAuthenticating(false);
     } catch (error: any) {
       alert(error.message);
     }
+
+    setAuthenticating(false);
+    setCreating(true);
   };
 
   return (
@@ -66,6 +69,7 @@ export default function Page() {
           onConfirm={onSubmitValidCheck}
         />
       )}
+      {creating && <CreatePostModal open={creating} setOpen={setCreating} />}
     </div>
   );
 }
