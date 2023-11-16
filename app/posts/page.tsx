@@ -1,24 +1,64 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface Post {
-  _id: string;
+  id: string;
+  thumbnail?: string;
   title: string;
   description: string;
-  thumbnail?: string;
   date: string;
 }
 
 export default function Page() {
-  const posts: Post[] = [];
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const response = await fetch(`/api/post/${page}`);
+        const {
+          result: { rows },
+        } = await response.json();
+        setPosts((prev) => [...prev, ...rows]);
+      } catch (error: any) {
+        alert(error.message);
+      }
+      setLoading(false);
+    }
+    loadPosts();
+  }, [page]);
+
+  useEffect(() => {
+    function handleScroll(event: Event) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        setLoading(true);
+        setPage((prev) => prev + 1);
+      }
+    }
+    if (loading) {
+      return window.removeEventListener('scroll', handleScroll);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [loading]);
 
   return (
     <div className='flex-1'>
       <div className='flex -m-4 flex-wrap'>
         {posts.map((post) => (
           <div
-            key={post._id}
+            key={post.id}
             className='h-fit m-4 mb-0 md:mb-4 flex flex-col w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] lg:w-[20rem] cursor-pointer bg-white dark:bg-neutral-800 rounded overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition'
           >
             <div className='w-full'>
