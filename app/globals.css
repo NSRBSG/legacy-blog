@@ -24,10 +24,10 @@
   }
 
   @media screen and (max-width: 1056px) {
-    min-width: calc(100% - 32px);
+    width: calc(100% - 2em);
   }
 
   @media screen and (max-width: 767px) {
-    max-width: calc(100% - 32px);
+    max-width: calc(100% - 2em);
   }
 }

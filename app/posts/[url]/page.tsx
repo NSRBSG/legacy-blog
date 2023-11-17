@@ -9,20 +9,21 @@ import { unified } from 'unified';
 
 interface Post {
   id: string;
+  url: string;
   thumbnail?: string;
   title: string;
   description: string;
   date: string;
 }
 
-export default function Page({ params: { id } }: { params: { id: number } }) {
+export default function Page({ params: { url } }: { params: { url: string } }) {
   const [post, setPost] = useState<Post | null>(null);
   const [remark, setRemark] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`/api/post/${id}`);
+        const response = await fetch(`/api/post/${url}`);
         const { result } = await response.json();
         const { rows } = result;
         const [row] = rows;
@@ -40,7 +41,7 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
         alert(error.message);
       }
     })();
-  }, [id]);
+  }, [url]);
 
   const getLocalDate = (date: string) => {
     const localDate = new Date(date);

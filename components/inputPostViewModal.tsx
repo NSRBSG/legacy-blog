@@ -13,8 +13,9 @@ export default function InputPostViewModal({
   setOpen: Function;
   content: string;
 }) {
-  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
   const [thumbnail, setThumbnail] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const handleThumbnailUpload = async (event: any) => {
@@ -54,8 +55,9 @@ export default function InputPostViewModal({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title,
+          url,
           thumbnail,
+          title,
           description,
           content,
         }),
@@ -92,6 +94,14 @@ export default function InputPostViewModal({
         </div>
         <div className='p-8 pt-4'>
           <form onSubmit={onSubmitCreatePost}>
+            <input
+              type='text'
+              required
+              placeholder='URL'
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className='p-4 w-full text-sm text-neutral-900 dark:text-neutral-400 bg-transparent border border-neutral-300 focus:ring-1 focus:ring-neutral-700 dark:focus:ring-neutral-200 focus:outline-none shadow transition duration-200 ease-in-out'
+            />
             <label htmlFor='thumbnail'>
               <div className='cursor-pointer w-full aspect-video border border-neutral-300 '>
                 <input
