@@ -8,8 +8,8 @@ import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Nonsense',
-  description: 'Nonsense Blog',
+  title: 'NSRBSG',
+  description: 'NSRBSG Blog',
 };
 
 export default function RootLayout({
@@ -52,7 +52,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div className='flex justify-center'>
-          <div className='container min-h-screen flex flex-col'>
+          <div className='relative container min-h-screen flex flex-col'>
             <Header />
             {children}
             <Footer />

@@ -3,8 +3,8 @@ import ThemeSwitch from '@/components/themeSwitch';
 
 export default function Header() {
   return (
-    <header className='flex justify-center sticky'>
-      <nav className='flex justify-between items-center h-16 w-full'>
+    <header className='flex h-16 w-full justify-center sticky top-0 backdrop-blur backdrop-opacity-100'>
+      <nav className='flex justify-between items-center w-full'>
         <div className='flex items-center  gap-x-6'>
           <CustomLink href='/' className='text-2xl font-bold'>
             NSRBSG

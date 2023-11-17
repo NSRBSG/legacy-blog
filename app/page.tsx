@@ -49,7 +49,7 @@ export default function Page() {
   };
 
   return (
-    <div className='flex-1 flex flex-col justify-center items-center gap-y-2'>
+    <div className='h-[200vh] flex flex-col justify-center items-center gap-y-2'>
       <h1 className='text-2xl font-bold md:text-4xl'>
         Hello! Welcome to my blog
       </h1>
