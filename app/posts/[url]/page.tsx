@@ -52,8 +52,8 @@ export default function Page({ params: { url } }: { params: { url: string } }) {
 
   return (
     <div className='w-full flex flex-col flex-1 items-center '>
-      <div className='w-[calc(100% - 2em)] md:w-[768px]'>
-        <h1 className='text-4xl font-bold mt-16 mb-8'>{post?.title}</h1>
+      <div className='w-[calc(100% - 2em)] md:w-[768px] mt-16 mb-16'>
+        <h1 className='text-4xl font-bold mb-8'>{post?.title}</h1>
         <h4 className='text-neutral-500 font-semibold mb-8 '>
           {post?.date && getLocalDate(post.date)}
         </h4>
