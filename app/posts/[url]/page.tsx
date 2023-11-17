@@ -1,5 +1,6 @@
 'use client';
 
+import { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
@@ -14,6 +15,29 @@ interface Post {
   title: string;
   description: string;
   date: string;
+}
+
+export async function generateMetadata({
+  params: { url },
+}: {
+  params: { url: string };
+}): Promise<Metadata> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/post/${url}`
+  );
+  const { result } = await response.json();
+  const { rows } = result;
+  const [row] = rows;
+
+  return {
+    openGraph: {
+      title: row.title,
+      description: row.description,
+      url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${row.url}`,
+      images: [row.thumbnail],
+      type: 'article',
+    },
+  };
 }
 
 export default function Page({ params: { url } }: { params: { url: string } }) {
