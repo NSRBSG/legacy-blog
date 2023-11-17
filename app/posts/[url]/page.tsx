@@ -58,7 +58,7 @@ export default function Page({ params: { url } }: { params: { url: string } }) {
           {post?.date && getLocalDate(post.date)}
         </h4>
         <div
-          className='prose-lg dark:prose-invert prose-neutral w-full overflow-hidden'
+          className='prose prose-lg prose-neutral dark:prose-invert w-full overflow-hidden'
           dangerouslySetInnerHTML={{ __html: remark }}
         />
       </div>
