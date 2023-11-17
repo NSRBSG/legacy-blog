@@ -51,13 +51,11 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <div className='flex justify-center'>
-          <div className='relative container min-h-screen flex flex-col'>
-            <Header />
-            {children}
-            <Footer />
-            <Analytics />
-          </div>
+        <div className='relative mx-auto container min-h-screen flex flex-col'>
+          <Header />
+          {children}
+          <Footer />
+          <Analytics />
         </div>
       </body>
     </html>
