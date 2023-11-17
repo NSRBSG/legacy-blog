@@ -13,7 +13,11 @@
 }
 
 .container {
-  width: 1728px;
+  width: calc(100% - 2em);
+
+  @media screen and (min-width: 1920px) {
+    width: 1728px;
+  }
 
   @media screen and (max-width: 1919px) {
     width: 1376px;
@@ -21,13 +25,5 @@
 
   @media screen and (max-width: 1440px) {
     width: 1024px;
-  }
-
-  @media screen and (max-width: 1056px) {
-    width: calc(100% - 2em);
-  }
-
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 2em);
   }
 }
