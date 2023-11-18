@@ -10,6 +10,7 @@ interface Post {
   thumbnail?: string;
   title: string;
   description: string;
+  content: string;
   date: string;
 }
 
@@ -27,7 +28,7 @@ export default function Page() {
         } = await response.json();
         setPosts((prev) => [...prev, ...rows]);
       } catch (error: any) {
-        alert(error.message);
+        console.error(error.message);
       }
       setLoading(false);
     }

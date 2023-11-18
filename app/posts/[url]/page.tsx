@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
@@ -12,6 +13,23 @@ interface Post {
   description: string;
   content: string;
   date: string;
+}
+
+export async function generateMetadata({
+  url,
+}: {
+  url: string;
+}): Promise<Metadata> {
+  const { thumbnail, title, description } = await getPost(url);
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: thumbnail,
+    },
+  };
 }
 
 export async function generateStaticParams() {

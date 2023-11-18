@@ -6,7 +6,7 @@ export async function GET(
   { params: { page } }: { params: { page: number } }
 ) {
   try {
-    const limit = 10;
+    const limit = 24;
     const offset = page * limit;
     const result = await sql`
       SELECT * FROM posts ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`;
