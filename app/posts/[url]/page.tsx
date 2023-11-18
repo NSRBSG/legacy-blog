@@ -54,7 +54,7 @@ async function getPost(url: string): Promise<Post> {
     .use(remarkRehype)
     .use(rehypeSanitize)
     .use(rehypeStringify)
-    .process(row.content);
+    .process(row?.content);
 
   return { ...row, content: String(file) };
 }
