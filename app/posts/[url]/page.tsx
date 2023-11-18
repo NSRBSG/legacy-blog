@@ -1,7 +1,3 @@
-'use client';
-
-import { Metadata } from 'next';
-import { useEffect, useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
@@ -14,14 +10,20 @@ interface Post {
   thumbnail?: string;
   title: string;
   description: string;
+  content: string;
   date: string;
 }
 
-export async function generateMetadata({
-  params: { url },
-}: {
-  params: { url: string };
-}): Promise<Metadata> {
+export async function generateStaticParams() {
+  const { result } = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posts/0`
+  ).then((res) => res.json());
+  const { rows } = result;
+
+  return rows.map((row: Post) => ({ params: { url: row.url } }));
+}
+
+async function getPost(url: string): Promise<Post> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/post/${url}`
   );
@@ -29,43 +31,22 @@ export async function generateMetadata({
   const { rows } = result;
   const [row] = rows;
 
-  return {
-    openGraph: {
-      title: row.title,
-      description: row.description,
-      url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${row.url}`,
-      images: [row.thumbnail],
-      type: 'article',
-    },
-  };
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeSanitize)
+    .use(rehypeStringify)
+    .process(row.content);
+
+  return { ...row, content: String(file) };
 }
 
-export default function Page({ params: { url } }: { params: { url: string } }) {
-  const [post, setPost] = useState<Post | null>(null);
-  const [remark, setRemark] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(`/api/post/${url}`);
-        const { result } = await response.json();
-        const { rows } = result;
-        const [row] = rows;
-
-        const file = await unified()
-          .use(remarkParse)
-          .use(remarkRehype)
-          .use(rehypeSanitize)
-          .use(rehypeStringify)
-          .process(row.content);
-
-        setRemark(String(file));
-        setPost(row);
-      } catch (error: any) {
-        alert(error.message);
-      }
-    })();
-  }, [url]);
+export default async function Page({
+  params: { url },
+}: {
+  params: { url: string };
+}) {
+  const { title, date, content } = await getPost(url);
 
   const getLocalDate = (date: string) => {
     const localDate = new Date(date);
@@ -77,13 +58,13 @@ export default function Page({ params: { url } }: { params: { url: string } }) {
   return (
     <div className='w-full flex flex-col flex-1 items-center '>
       <div className='w-full md:w-[768px] mt-16 mb-16'>
-        <h1 className='text-4xl font-bold mb-8'>{post?.title}</h1>
+        <h1 className='text-4xl font-bold mb-8'>{title}</h1>
         <h4 className='text-neutral-500 font-semibold mb-8 '>
-          {post?.date && getLocalDate(post.date)}
+          {getLocalDate(date)}
         </h4>
         <div
           className='prose prose-lg prose-neutral dark:prose-invert w-full overflow-hidden'
-          dangerouslySetInnerHTML={{ __html: remark }}
+          dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
     </div>
