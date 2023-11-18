@@ -20,15 +20,10 @@ export async function generateMetadata({
 }: {
   url: string;
 }): Promise<Metadata> {
-  const { thumbnail, title, description } = await getPost(url);
+  const { title, description } = await getPost(url);
   return {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      images: thumbnail,
-    },
   };
 }
 
