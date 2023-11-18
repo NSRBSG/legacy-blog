@@ -16,14 +16,19 @@ interface Post {
 }
 
 export async function generateMetadata({
-  url,
+  params: { url },
 }: {
-  url: string;
+  params: { url: string };
 }): Promise<Metadata> {
-  const { title, description } = await getPost(url);
+  const { thumbnail, title, description } = await getPost(url);
   return {
     title,
     description,
+    openGraph: {
+      title,
+      description,
+      images: thumbnail,
+    },
   };
 }
 
