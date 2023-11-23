@@ -72,7 +72,7 @@ export default function Home() {
       for (let i = 0; i < numSections; i++) {
         const text = new TextGeometry(textArray[i], {
           font: font,
-          size: 1,
+          size: 0.75,
           height: 0.25,
         });
 
@@ -175,8 +175,38 @@ export default function Home() {
       lookAtTarget(target[currentTargetIndex]);
     }
 
+    let startY: number;
+
+    function touchUpdate(event: TouchEvent) {
+      if (eventStart) return;
+
+      if (event.type === 'touchstart') {
+        startY = event.changedTouches[0].clientY;
+        return;
+      }
+
+      if (event.type === 'touchend') {
+        const endY = event.changedTouches[0].clientY;
+        if (startY - endY > 0) {
+          currentTargetIndex++;
+          if (currentTargetIndex >= target.length) currentTargetIndex = 0;
+        } else if (startY - endY < 0) {
+          currentTargetIndex--;
+          if (currentTargetIndex < 0) currentTargetIndex = target.length - 1;
+        } else {
+          return;
+        }
+
+        eventStart = true;
+
+        lookAtTarget(target[currentTargetIndex]);
+      }
+    }
+
     window.addEventListener('resize', resizeUpdate);
     window.addEventListener('wheel', wheelUpdate);
+    window.addEventListener('touchstart', touchUpdate);
+    window.addEventListener('touchend', touchUpdate);
     return () => {
       window.removeEventListener('resize', resizeUpdate);
       window.removeEventListener('wheel', wheelUpdate);
