@@ -51,7 +51,7 @@ export default function Page() {
   };
 
   return (
-    <div className='flex flex-1 -my-16 flex-col justify-center items-center'>
+    <div className='flex flex-1 flex-col -my-16 justify-center items-center'>
       {/* <h1 className='text-2xl font-bold md:text-4xl'>
         Hello! Welcome to my blog
       </h1>

@@ -18,10 +18,6 @@ export default function Home({
 
     let currentTargetIndex = 2;
 
-    document.body.style.display = 'fixed';
-    document.body.style.overflow = 'hidden';
-    document.body.style.top = '0';
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -75,6 +71,10 @@ export default function Home({
     const loader = new FontLoader();
 
     loader.load('/Grandiflora One_Regular.json', (font) => {
+      document.body.style.overflow = 'hidden';
+      document.body.style.display = 'fixed';
+      document.body.style.top = '0';
+      document.body.style.left = '0';
       animate();
       window.addEventListener('resize', resizeUpdate);
       window.addEventListener('wheel', wheelUpdate);
