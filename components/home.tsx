@@ -4,7 +4,13 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { FontLoader, TextGeometry } from 'three/examples/jsm/Addons.js';
 
-export default function Home() {
+export default function Home({
+  loading,
+  setLoading,
+}: {
+  loading: boolean;
+  setLoading: any;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -69,6 +75,12 @@ export default function Home() {
     const loader = new FontLoader();
 
     loader.load('/Grandiflora One_Regular.json', (font) => {
+      animate();
+      window.addEventListener('resize', resizeUpdate);
+      window.addEventListener('wheel', wheelUpdate);
+      window.addEventListener('touchstart', touchUpdate);
+      window.addEventListener('touchend', touchUpdate);
+      setLoading(false);
       for (let i = 0; i < numSections; i++) {
         const text = new TextGeometry(textArray[i], {
           font: font,
@@ -105,8 +117,6 @@ export default function Home() {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
-
-    animate();
 
     function resizeUpdate() {
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -203,10 +213,6 @@ export default function Home() {
       }
     }
 
-    window.addEventListener('resize', resizeUpdate);
-    window.addEventListener('wheel', wheelUpdate);
-    window.addEventListener('touchstart', touchUpdate);
-    window.addEventListener('touchend', touchUpdate);
     return () => {
       window.removeEventListener('resize', resizeUpdate);
       window.removeEventListener('wheel', wheelUpdate);
@@ -214,7 +220,9 @@ export default function Home() {
       document.body.style.overflow = 'auto';
       document.body.style.top = 'auto';
     };
-  }, []);
+  }, [setLoading]);
 
-  return <canvas ref={canvasRef}></canvas>;
+  return (
+    <canvas className={loading ? 'hidden' : 'block'} ref={canvasRef}></canvas>
+  );
 }

@@ -6,6 +6,7 @@ import SecretModal from '@/components/secretModal';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
+  const [loading, setLoading] = useState(true);
   const [authenticating, setAuthenticating] = useState(false);
   const [creating, setCreating] = useState(false);
 
@@ -50,7 +51,7 @@ export default function Page() {
   };
 
   return (
-    <div className='flex h-full -my-16 flex-col justify-center items-center'>
+    <div className='flex flex-1 -my-16 flex-col justify-center items-center'>
       {/* <h1 className='text-2xl font-bold md:text-4xl'>
         Hello! Welcome to my blog
       </h1>
@@ -63,7 +64,10 @@ export default function Page() {
       <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
         nsrbsg@gmail.com
       </p> */}
-      <Home />
+      {loading && (
+        <div className='animate-spin relative flex h-10 w-10 rounded-sm bg-black dark:bg-white opacity-75'></div>
+      )}
+      <Home loading={loading} setLoading={setLoading} />
       {authenticating && (
         <SecretModal
           open={authenticating}
