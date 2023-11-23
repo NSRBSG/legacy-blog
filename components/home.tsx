@@ -118,7 +118,7 @@ export default function Home() {
 
     function lookAtTarget(target: THREE.Vector3) {
       let rafId: number;
-      const acc = 0.02;
+      const acc = 0.05;
 
       function animate() {
         // 카메라의 현재 방향 계산

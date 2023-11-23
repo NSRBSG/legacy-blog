@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 
 import CreatePostModal from '@/components/createPostModal';
 import Home from '@/components/home';
@@ -6,48 +6,48 @@ import SecretModal from '@/components/secretModal';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-  // const [authenticating, setAuthenticating] = useState(false);
-  // const [creating, setCreating] = useState(false);
+  const [authenticating, setAuthenticating] = useState(false);
+  const [creating, setCreating] = useState(false);
 
-  // useEffect(() => {
-  //   function authenticate(event: KeyboardEvent) {
-  //     if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-  //       setAuthenticating(true);
-  //     }
-  //   }
-  //   window.addEventListener('keydown', authenticate);
-  //   return () => {
-  //     window.removeEventListener('keydown', authenticate);
-  //   };
-  // }, []);
+  useEffect(() => {
+    function authenticate(event: KeyboardEvent) {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        setAuthenticating(true);
+      }
+    }
+    window.addEventListener('keydown', authenticate);
+    return () => {
+      window.removeEventListener('keydown', authenticate);
+    };
+  }, []);
 
-  // const onSubmitValidCheck = async (
-  //   event: React.FormEvent<HTMLFormElement>
-  // ) => {
-  //   event.preventDefault();
+  const onSubmitValidCheck = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
 
-  //   const { value } = event.currentTarget[0] as HTMLInputElement;
+    const { value } = event.currentTarget[0] as HTMLInputElement;
 
-  //   try {
-  //     const response = await fetch('/api/secret', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ password: value }),
-  //     });
+    try {
+      const response = await fetch('/api/secret', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: value }),
+      });
 
-  //     if (response.status === 401) {
-  //       alert('Invalid Password');
-  //       return;
-  //     }
-  //   } catch (error: any) {
-  //     alert(error.message);
-  //   }
+      if (response.status === 401) {
+        alert('Invalid Password');
+        return;
+      }
+    } catch (error: any) {
+      alert(error.message);
+    }
 
-  //   setAuthenticating(false);
-  //   setCreating(true);
-  // };
+    setAuthenticating(false);
+    setCreating(true);
+  };
 
   return (
     <div className='flex h-full -my-16 flex-col justify-center items-center'>
@@ -62,7 +62,8 @@ export default function Page() {
       </p>
       <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
         nsrbsg@gmail.com
-      </p>
+      </p> */}
+      <Home />
       {authenticating && (
         <SecretModal
           open={authenticating}
@@ -70,8 +71,7 @@ export default function Page() {
           onConfirm={onSubmitValidCheck}
         />
       )}
-      {creating && <CreatePostModal open={creating} setOpen={setCreating} />} */}
-      <Home />
+      {creating && <CreatePostModal open={creating} setOpen={setCreating} />}
     </div>
   );
 }
