@@ -17,7 +17,7 @@ interface Post {
 export default function Page() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadPosts() {
@@ -62,6 +62,13 @@ export default function Page() {
       localDate.getMonth() + 1
     }-${localDate.getDate()}`;
   };
+
+  if (loading)
+    return (
+      <div className='w-full flex flex-1 justify-center items-center'>
+        <div className='animate-spin relative flex h-10 w-10 rounded-sm bg-black dark:bg-white opacity-75'></div>
+      </div>
+    );
 
   return (
     <div className='flex-1'>
