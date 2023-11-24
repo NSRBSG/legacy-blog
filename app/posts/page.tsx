@@ -63,9 +63,9 @@ export default function Page() {
     }-${localDate.getDate()}`;
   };
 
-  if (loading)
+  if (!posts.length)
     return (
-      <div className='w-full flex flex-1 justify-center items-center'>
+      <div className='w-full h-full flex flex-1 justify-center items-center'>
         <div className='animate-spin relative flex h-10 w-10 rounded-sm bg-black dark:bg-white opacity-75'></div>
       </div>
     );
