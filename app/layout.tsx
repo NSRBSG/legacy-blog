@@ -10,6 +10,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'NSRBSG',
   description: 'NSRBSG Blog',
+  openGraph: {
+    title: 'NSRBSG',
+    description: 'NSRBSG Blog',
+  },
 };
 
 export default function RootLayout({
