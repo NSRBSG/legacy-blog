@@ -53,8 +53,8 @@ async function getPost(url: string): Promise<Post> {
   const file = await unified()
     .use(remarkParse)
     .use(remarkRehype)
-    .use(rehypeHighlight)
     .use(rehypeSanitize)
+    .use(rehypeHighlight)
     .use(rehypeStringify)
     .process(row?.content);
 

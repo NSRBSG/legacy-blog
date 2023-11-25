@@ -39,8 +39,8 @@ export default function CreatePostModal({
     unified()
       .use(remarkParse)
       .use(remarkRehype)
-      .use(rehypeHighlight)
       .use(rehypeSanitize)
+      .use(rehypeHighlight)
       .use(rehypeStringify)
       .process(content)
       .then((file) => setRemark(String(file)));
