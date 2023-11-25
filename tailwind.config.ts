@@ -6,8 +6,16 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    {
+      pattern: /hljs+/,
+    },
+  ],
   darkMode: 'class',
   theme: {
+    hljs: {
+      theme: 'github-dark',
+    },
     screens: {
       md: '767px',
       lg: '1056px',
@@ -16,6 +24,9 @@ const config: Config = {
     },
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('tailwind-highlightjs'),
+  ],
 };
 export default config;
