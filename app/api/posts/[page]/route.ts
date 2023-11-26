@@ -9,7 +9,7 @@ export async function GET(
     const limit = 24;
     const offset = page * limit;
     const result = await sql`
-      SELECT * FROM posts ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`;
+      SELECT id, url, thumbnail, title, description, date FROM posts ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`;
     return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
