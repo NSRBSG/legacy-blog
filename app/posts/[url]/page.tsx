@@ -35,7 +35,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const { result } = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/get/posts`
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posts`
   ).then((res) => res.json());
 
   const { rows } = result;
