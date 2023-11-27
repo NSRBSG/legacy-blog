@@ -6,28 +6,27 @@ interface Post {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { result } = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posts`
-  ).then((res) => res.json());
+  const result = await fetch(`https://www.nsrbsg.dev/api/posts`);
+  const { result: posts } = await result.json();
 
-  const { rows } = result;
+  const { rows } = posts;
 
   return [
     {
-      url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/`,
+      url: `https://www.nsrbsg.dev`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'yearly',
       priority: 1,
     },
     {
-      url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts`,
+      url: `https://www.nsrbsg.dev/posts`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    ...rows.map((row: Post) => {
+    ...rows!.map((row: Post) => {
       return {
-        url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${row.url}`,
+        url: `https://www.nsrbsg.dev/posts/${row.url}`,
         lastModified: new Date().toISOString(),
         changeFrequency: 'yearly',
         priority: 0.8,

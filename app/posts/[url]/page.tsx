@@ -33,15 +33,6 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  const { result } = await fetch(`https://www.nsrbsg.dev/api/posts`).then(
-    (res) => res.json()
-  );
-
-  const { rows } = result;
-  return rows.map((row: Post) => ({ params: { url: row.url } }));
-}
-
 async function getPost(url: string): Promise<Post> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/post/${url}`
