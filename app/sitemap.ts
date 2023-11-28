@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next';
 
-interface Post {
-  id: string;
-  url: string;
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const result = await fetch(`https://www.nsrbsg.dev/api/posts`);
-  const { result: posts } = await result.json();
+  interface Post {
+    id: string;
+    url: string;
+  }
 
+  const result = await fetch(`https://www.nsrbsg.dev/api/posts`);
+
+  const { result: posts } = await result.json();
   const { rows } = posts;
 
   return [
