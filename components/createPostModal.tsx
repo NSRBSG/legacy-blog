@@ -10,6 +10,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import InputPostViewModal from './inputPostViewModal';
+import remarkGfm from 'remark-gfm';
 
 export default function CreatePostModal({
   open,
@@ -38,6 +39,7 @@ export default function CreatePostModal({
   useEffect(() => {
     unified()
       .use(remarkParse)
+      .use(remarkGfm)
       .use(remarkRehype)
       .use(rehypeSanitize)
       .use(rehypeHighlight)

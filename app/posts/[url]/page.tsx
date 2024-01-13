@@ -5,6 +5,7 @@ import rehypeHighlight from 'rehype-highlight';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
+import remarkGfm from 'remark-gfm';
 
 interface Post {
   id: string;
@@ -43,6 +44,7 @@ async function getPost(url: string): Promise<Post> {
 
   const file = await unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSanitize)
     .use(rehypeHighlight)
