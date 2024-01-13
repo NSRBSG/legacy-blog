@@ -18,9 +18,7 @@ interface Post {
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posts`
-  );
+  const response = await fetch(`https://www.nsrbsg.dev/api/posts`);
   const { result } = await response.json();
   const { rows } = result;
 
@@ -32,7 +30,7 @@ export async function generateMetadata({
 }: {
   params: { url: string };
 }): Promise<Metadata> {
-  const { thumbnail, title, description } = await getPost(url);
+  const { thumbnail, title, description } = await getData(url);
   return {
     title,
     description,
@@ -44,10 +42,8 @@ export async function generateMetadata({
   };
 }
 
-export async function getPost(url: string): Promise<Post> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/post/${url}`
-  );
+async function getData(url: string): Promise<Post> {
+  const response = await fetch(`https://www.nsrbsg.dev/api/post/${url}`);
   const { result } = await response.json();
   const { rows } = result;
   const [row] = rows;
@@ -69,7 +65,7 @@ export default async function Page({
 }: {
   params: { url: string };
 }) {
-  const { title, date, content } = await getPost(url);
+  const { title, date, content } = await getData(url);
 
   const getLocalDate = (date: string) => {
     const localDate = new Date(date);
