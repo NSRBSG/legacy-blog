@@ -17,6 +17,16 @@ interface Post {
   date: string;
 }
 
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posts`
+  );
+  const { result } = await response.json();
+  const { rows } = result;
+
+  return rows.map((row: { url: string }) => ({ url: row.url }));
+}
+
 export async function generateMetadata({
   params: { url },
 }: {
@@ -34,7 +44,7 @@ export async function generateMetadata({
   };
 }
 
-async function getPost(url: string): Promise<Post> {
+export async function getPost(url: string): Promise<Post> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/post/${url}`
   );
