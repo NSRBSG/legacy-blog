@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .light {
-  color: black;
+  color: #121212;
   background-color: #f8f9fa;
 }
 

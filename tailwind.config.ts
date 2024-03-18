@@ -22,7 +22,17 @@ const config: Config = {
       xl: '1440px',
       '2xl': '1919px',
     },
-    extend: {},
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            pre: {
+              backgroundColor: '#0d1117',
+            },
+          },
+        },
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),

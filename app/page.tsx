@@ -52,18 +52,6 @@ export default function Page() {
 
   return (
     <div className='flex flex-1 flex-col -my-16 justify-center items-center'>
-      {/* <h1 className='text-2xl font-bold md:text-4xl'>
-        Hello! Welcome to my blog
-      </h1>
-      <p className='text-xs md:text-2xl'>
-        I will introduce my daily life and thoughts on my blog.
-      </p>
-      <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
-        If you want to contact me, please reach out to my email
-      </p>
-      <p className='text-xs md:text-2xl text-neutral-600 dark:text-neutral-400'>
-        nsrbsg@gmail.com
-      </p> */}
       {loading && (
         <div className='animate-spin relative flex h-10 w-10 rounded-sm bg-black dark:bg-white opacity-75'></div>
       )}
